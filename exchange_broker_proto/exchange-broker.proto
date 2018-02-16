@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package exchange_broker_proto;
+
+message OHLCV {
+  int64 ID = 1;
+  int32 Time = 2;
+  int32 Interval = 3;
+  float Open = 4;
+  float High = 5;
+  float Low = 6;
+  float Close = 7;
+  int32 Volume = 8;
+  string Ticker = 9;
+}
+
+message Deal {
+    int32 ClientID = 2;
+    string Ticker = 3;
+    int32 Amount = 4;
+    bool Partial = 5;
+    int32 Time = 6;
+    float Price = 7;
+}
+
+message Nothing {
+  bool dummy = 1;
+}
+
+service ExchangeBroker {
+  rpc OHLCVstream (Nothing) returns (stream OHLCV) {}
+  rpc GetDeal (stream Deal) returns (stream Deal) {}
+}
